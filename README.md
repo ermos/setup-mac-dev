@@ -1,18 +1,23 @@
 # setup-mac-dev
 
 ```shell
+# Base
+echo 'PATH="/usr/local/bin:$HOME/.local/bin/:$HOME/bin:$PATH"' >> $HOME/.zprofile
+
 # ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Homebrew
-echo "PATH="/usr/local/bin:$PATH"" >> ~/.profile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Jetbrains cli helper
-echo "export IJ_LAUNCHER_DEBUG=true" >> ~/.profile
-echo "export IDEA_LAUNCHER_DEBUG=true" >> ~/.profile
-echo 'ALIAS webstorm="open -a ~/Applications/WebStorm.app/Contents/MacOS/webstorm"' >> ~/.profile
-echo 'ALIAS phpstorm="open -a ~/Applications/PhpStorm.app/Contents/MacOS/phpstorm"' >> ~/.profile
-echo 'ALIAS goland="open -a ~/Applications/GoLand.app/Contents/MacOS/goland"' >> ~/.profile
-echo 'ALIAS aqua="open -a ~/Applications/Aqua.app/Contents/MacOS/aqua"' >> ~/.profile
+# Install Taskfile
+sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
+
+# Composer auth.json
+echo '{' >> $HOME/composer.auth.json
+echo '    "github-oauth": {' >> $HOME/composer.auth.json
+echo '        "github.com": "REPLACE_WITH_YOUR_TOKEN_HERE"' >> $HOME/composer.auth.json
+echo '    }' >> $HOME/composer.auth.json
+echo '}' >> $HOME/composer.auth.json
+echo 'ALIAS composer-auth="ln -s $HOME/composer.auth.json auth.json"' >> $HOME/.zprofile
 ```
